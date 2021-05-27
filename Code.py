@@ -19,7 +19,7 @@ def get_trailer_from_index(index):
 
 def get_summary_from_index(index):
 	return df[df.Index == index]["Short Summary"].values[0]
-
+ 
 def get_genre_from_index(index):
 	return df[df.Index == index]["Genres"].values[0]
 

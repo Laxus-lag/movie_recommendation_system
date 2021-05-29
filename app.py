@@ -12,7 +12,8 @@ def show_index_html():
 def get_data_from_html():
         pay = request.form['pay']
         movies,poster,year,genre,rating,summary = func(pay)
-        return render_template('index.html', movies = movies,poster =poster,year =year,genre =genre,rating =rating,summary =summary)
+        length =len(movies)
+        return render_template('index.html', movies = movies,poster =poster,year =year,genre =genre,rating =rating,summary =summary,length = length)
 
 if __name__ == '__main__':
     app.run( debug=True)

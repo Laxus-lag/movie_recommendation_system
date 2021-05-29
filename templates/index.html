@@ -65,6 +65,9 @@
             <input class="btn btn-outline-primary waves-effect " type="submit" value="Search ">
         </form>
         <br>
+        {%if length == 0%}
+        <h1>Movie Name is Not Present in our Dataset Sorry!!!</h1>
+        {% endif%}
         <table  cellpadding="16">
             <tr>
                 {% for i in range(movies | length) %}

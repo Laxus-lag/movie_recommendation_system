@@ -15,3 +15,31 @@ db.new_db.update_many(
 )
 
 ################################
+df = db.new_db.aggregate([
+    {"$project": {
+        "_id": False,
+        "Title": True,
+        "Year": True,
+        "Short Summary": True,
+        "Genres": 
+		{
+			"$replaceAll": 
+			{
+				"input": "$Genres", "find": "|", "replacement": " "
+			}
+		},
+        "YouTube Trailer": True,
+        "Rating": True,
+        "Director": True,
+        "Writers": True,
+        "Cast": True,
+        "Index": True
+    }
+    }
+])
+data = list(df)
+
+#############################
+
+
+##############################

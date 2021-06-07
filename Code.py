@@ -3,20 +3,30 @@ import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import difflib
+from connection import db
+from connection import data
 
 ##	Step 1: Read CSV File	##
-
-movie_df = pd.read_csv("dataset.csv")
+title =[]
+feature =[]
+#movie_df = pd.read_csv("dataset.csv")
 
 ##	Step 2: Cleaning Dataset##
 
-movie_df['Cast'] = movie_df['Cast'].str.replace('|',' ',regex=True)
-movie_df['Writers'] =movie_df['Writers'].str.replace('|',' ',regex=True)
-items = ['Title','Genres','Director','Cast','Writers']
+for item in data:
+    title.append(item['Title'])
+    feature.append(item['Title'] + " "+item['Genres'] + " " +
+                   item['Director'] + " " + item['Writers'] + " " + item['Cast'])
 
-for feature in items:
-	movie_df[feature] = movie_df[feature].fillna(" ")
+# movie_df['Cast'] = movie_df['Cast'].str.replace('|',' ',regex=True)
+# movie_df['Writers'] =movie_df['Writers'].str.replace('|',' ',regex=True)
+# items = ['Title','Genres','Director','Cast','Writers']
+
+# for feature in items:
+# 	movie_df[feature] = movie_df[feature].fillna(" ")
 # movie_df.to_csv(r'D:\file3.csv', index=False)
+
+
 
 ##	Step 3: Required selected features are combined	##
 

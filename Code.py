@@ -15,7 +15,8 @@ movie_df['Writers'] =movie_df['Writers'].str.replace('|',' ',regex=True)
 items = ['Title','Genres','Director','Cast','Writers']
 
 for feature in items:
-	movie_df[feature] = movie_df[feature].fillna("")
+	movie_df[feature] = movie_df[feature].fillna(" ")
+# movie_df.to_csv(r'D:\file3.csv', index=False)
 
 ##	Step 3: Required selected features are combined	##
 
@@ -36,7 +37,7 @@ def combine_items(row):
 #	Function for taking the user liked movie input and
 #   finding similar movies	to return to user which user will like by
 #   using count matrix and cosine similarity base on count matrix
-#commit
+
 
 def func(input_movies):
 	

@@ -2,21 +2,30 @@ import pandas as pd
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-import difflib
+from difflib import get_close_matches
 from connection import db
 from connection import data
 
+#############################################
 ##	Step 1: Read CSV File	##
 title =[]
 feature =[]
 #movie_df = pd.read_csv("dataset.csv")
 
+#############################################
 ##	Step 2: Cleaning Dataset##
 
 for item in data:
     title.append(item['Title'])
-    feature.append(item['Title'] + " "+item['Genres'] + " " +
-                   item['Director'] + " " + item['Writers'] + " " + item['Cast'])
+    feature.append(item['Title'] 
+	+ " "
+	+item['Genres'] 
+	+ " "
+	+item['Director'] 
+	+ " " 
+	+ item['Writers'] 
+	+ " " 
+	+ item['Cast'])
 
 # movie_df['Cast'] = movie_df['Cast'].str.replace('|',' ',regex=True)
 # movie_df['Writers'] =movie_df['Writers'].str.replace('|',' ',regex=True)
@@ -26,7 +35,7 @@ for item in data:
 # 	movie_df[feature] = movie_df[feature].fillna(" ")
 # movie_df.to_csv(r'D:\file3.csv', index=False)
 
-
+#############################################
 
 ##	Step 3: Required selected features are combined	##
 
@@ -44,6 +53,8 @@ def combine_items(row):
 	except():
 		print ("Error in Search:", row)
 
+#############################################
+
 #	Function for taking the user liked movie input and
 #   finding similar movies	to return to user which user will like by
 #   using count matrix and cosine similarity base on count matrix
@@ -57,19 +68,20 @@ def func(input_movies):
 	genre = []
 	rating = []
 	summary = []
+	common_title =get_close_matches(input_movies,title,1)
+	# movie_df["feature"] = movie_df.apply(combine_items,axis=1)
 	
-	movie_df["feature"] = movie_df.apply(combine_items,axis=1)
-	
-	movies_title_list = movie_df['Title'].tolist()
-	common_title = difflib.get_close_matches(input_movies, movies_title_list, 1)
+	# movies_title_list = movie_df['Title'].tolist()
+	# common_title = difflib.get_close_matches(input_movies, movies_title_list, 1)
 	if len(common_title) ==0:
 		return movies, poster, year, genre, rating, summary
 	title_sim = common_title[0]
-	movie_index_from_database = movie_df[movie_df.Title == title_sim]["Index"].values[0]
+	movie_index_from_database = title.index(title_sim)
+	# movie_index_from_database = movie_df[movie_df.Title == title_sim]["Index"].values[0]
 	
 	cv = CountVectorizer()
 
-	count_matrix = cv.fit_transform(movie_df["feature"])
+	count_matrix = cv.fit_transform(feature)
 	cosine_sim = cosine_similarity(count_matrix) 
 
 	similar_movie_list =  list(enumerate(cosine_sim[movie_index_from_database]))

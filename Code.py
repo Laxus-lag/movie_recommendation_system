@@ -39,26 +39,25 @@ for item in data:
 
 ##	Step 3: Required selected features are combined	##
 
-def combine_items(row):
-	try:
-		return (row['Title'] 
-		+" "
-		+row["Genres"] 
-		+" "
-		+row["Director"]
-		+ " "
-		+ row["Cast"]
-		+ " "
-		+ row["Writers"])
-	except():
-		print ("Error in Search:", row)
+# def combine_items(row):
+# 	try:
+# 		return (row['Title'] 
+# 		+" "
+# 		+row["Genres"] 
+# 		+" "
+# 		+row["Director"]
+# 		+ " "
+# 		+ row["Cast"]
+# 		+ " "
+# 		+ row["Writers"])
+# 	except():
+# 		print ("Error in Search:", row)
 
 #############################################
 
 #	Function for taking the user liked movie input and
 #   finding similar movies	to return to user which user will like by
 #   using count matrix and cosine similarity base on count matrix
-
 
 def func(input_movies):
 	
@@ -88,16 +87,18 @@ def func(input_movies):
 	similar_sort_movies = sorted(similar_movie_list,key=lambda x:x[1],reverse=True)
 	
 	i=0
-
+	temp =[]
 	for element in similar_sort_movies:
-			if i>10:
-				break	
-			movies.append(movie_df[movie_df.Index == element[0]]["Title"].values[0])
-			poster.append(movie_df[movie_df.Index == element[0]]["YouTube Trailer"].values[0])
-			year.append(movie_df[movie_df.Index == element[0]]["Year"].values[0])
-			genre.append(movie_df[movie_df.Index == element[0]]["Genres"].values[0])
-			rating.append(movie_df[movie_df.Index == element[0]]["Rating"].values[0])
-			summary.append(movie_df[movie_df.Index == element[0]]["Short Summary"].values[0])
-			i+=1
+		temp.append(db.new_db.find({}, {"_id": False})[element[0]])
+		i+=1
+		if(i>10):
+			break
+	for element in temp:
+		movies.append(element["Title"])
+		poster.append(element["YouTube Trailer"])
+		year.append(element["Year"])
+		genre.append(element["Genres"])
+		rating.append(element["Rating"])
+		summary.append(element["Short Summary"])
 			
 	return movies,poster,year,genre,rating,summary

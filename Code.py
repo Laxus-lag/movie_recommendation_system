@@ -102,3 +102,28 @@ def func(input_movies):
 		summary.append(element["Short Summary"])
 			
 	return movies,poster,year,genre,rating,summary
+
+
+def func1(input_movies):
+
+	year = []
+	poster = []
+	movies = []
+	genre = []
+	rating = []
+	summary = []
+	df=db.new_db.find({'Genres':{'$regex':input_movies}}).sort("Rating",-1)
+	i = 0
+	
+	for element in df:
+		movies.append(element["Title"])
+		poster.append(element["YouTube Trailer"])
+		year.append(element["Year"])
+		genre.append(element["Genres"])
+		rating.append(element["Rating"])
+		summary.append(element["Short Summary"])
+		i += 1
+		if(i > 10):
+			break
+
+	return movies, poster, year, genre, rating, summary

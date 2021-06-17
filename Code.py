@@ -11,7 +11,12 @@ from connection import data
 title =[]
 feature =[]
 #movie_df = pd.read_csv("dataset.csv")
-
+#############################################
+def angular_sim(a,b):
+    product =np.dot(a,b)
+    norm1 =np.linalg.norm(a)
+    norm2=np.linalg.norm(b)
+    return (product/(norm1 * norm2 +1))
 #############################################
 ##	Step 2: Cleaning Dataset##
 
@@ -60,7 +65,7 @@ for item in data:
 #   using count matrix and cosine similarity base on count matrix
 
 def func(input_movies):
-	
+	ans = []
 	year = []
 	poster = []
 	movies = []
@@ -78,12 +83,17 @@ def func(input_movies):
 	movie_index_from_database = title.index(title_sim)
 	# movie_index_from_database = movie_df[movie_df.Title == title_sim]["Index"].values[0]
 	
-	cv = CountVectorizer()
+	cv = CountVectorizer(stop_words='english')
 
 	count_matrix = cv.fit_transform(feature)
-	cosine_sim = cosine_similarity(count_matrix) 
+	vector_mat =count_matrix.toarray()
+	a=0
+	for a in range(len(vector_mat)):
+		ans.append(round(angular_sim(vector_mat[movie_index_from_database],vector_mat[a]),2))
+	
+	# cosine_sim = cosine_similarity(count_matrix) 
 
-	similar_movie_list =  list(enumerate(cosine_sim[movie_index_from_database]))
+	similar_movie_list =  list(enumerate(ans))
 	similar_sort_movies = sorted(similar_movie_list,key=lambda x:x[1],reverse=True)
 	
 	i=0

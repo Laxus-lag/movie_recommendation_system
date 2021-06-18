@@ -22,7 +22,7 @@ def angular_sim(a,b):
 
 for item in data:
     title.append(item['Title'])
-    feature.append(item['Title'] 
+    feature.append((item['Title']) 
 	+ " "
 	+item['Genres'] 
 	+ " "
@@ -64,6 +64,7 @@ for item in data:
 #   finding similar movies	to return to user which user will like by
 #   using count matrix and cosine similarity base on count matrix
 
+
 def func(input_movies):
 	ans = []
 	year = []
@@ -72,9 +73,21 @@ def func(input_movies):
 	genre = []
 	rating = []
 	summary = []
+	title.clear()
+	feature.clear()
+	for item in data:
+		title.append(item['Title'])
+		feature.append((item['Title']) 
+		+ " "
+		+item['Genres'] 
+		+ " "
+		+item['Director'] 
+		+ " " 
+		+ item['Writers'] 
+		+ " " 
+		+ item['Cast'])
 	common_title =get_close_matches(input_movies,title,1)
 	# movie_df["feature"] = movie_df.apply(combine_items,axis=1)
-	
 	# movies_title_list = movie_df['Title'].tolist()
 	# common_title = difflib.get_close_matches(input_movies, movies_title_list, 1)
 	if len(common_title) ==0:

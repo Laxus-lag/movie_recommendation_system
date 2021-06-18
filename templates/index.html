@@ -5,14 +5,12 @@
     <title>
 
     </title>
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
         integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <style>
-        .brown {
-            color: black;
-        }
-
         body {
             background-image: url('https://www.teahub.io/photos/full/256-2561762_full-hd-old-paper.jpg');
             align-items: center;
@@ -30,15 +28,35 @@
 
         th {
             font-family: Georgia, 'Times New Roman', Times, serif;
-            font-size: 20 px;
+            font-size: large;
             text-align: center;
+            padding: 10px;
+        }
+
+        td {
+            text-align: center;
+            padding: 10px;
+            font-size: medium;
         }
 
         input[type='text'] {
+            outline: none;
+            border: none;
             padding: 10px;
             color: brown;
             width: 50%;
-            border-radius: 25px;
+            border-radius: 25px 0px 0px 25px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        button[type='submit'] {
+            border: none;
+            outline: none;
+            background-color: white;
+            padding: 10px;
+            color: green;
+            width: 5%;
+            border-radius: 0px 25px 25px 0px;
             font-family: Georgia, 'Times New Roman', Times, serif;
         }
 
@@ -47,48 +65,109 @@
             font-family: Georgia, 'Times New Roman', Times, serif;
             color: black;
             width: 15%;
-            border-radius: 25px;
+            border-radius: 0px 25px 25px 0px;
+        }
+
+        .brown {
+            color: black;
+        }
+
+        #btn {
+            opacity: 1;
+            transition: 0.3s;
+        }
+
+        #btn:hover {
+            background-color: rgba(206, 198, 198, 0.65);
+        }
+
+        select {
+            direction: rtl;
+            outline: none;
+            border: 0px solid #ccc;
+            vertical-align: top;
+            height: 40px;
+            width: 180px;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            border-radius: 0px 0px 0px 25px;
+        }
+
+        option {
+            direction: ltr;
         }
     </style>
 
 </head>
 
 <body>
-
     <center>
         <br>
         <h1 class="brown"><strong><span style="color:rgb(235, 57, 57)">RECOMMENDATION</span> SYSTEM</strong></h1>
         <br>
         <form method="POST" action="/send_data">
             <div class="form-group">
-                <input type="text" name="pay" placeholder="Enter Movie Name" id="Search" required>
+                <input type="text" name="pay" placeholder="Enter Movie Name" id="Search" required><button type="submit"
+                    id="btn"><i class="glyphicon glyphicon-search"></i></button>
             </div>
-            <input class="btn btn-outline-primary waves-effect " type="submit" value="Search ">
-        </form>
-        <br>
+            <!-- <input class="btn btn-outline-primary waves-effect " type="submit" value="Search "> -->
 
-        <br>
-        <form method="POST" action="/send_Genres">
-            <div class="form-group">
-                <select name ="Genres" value ="Genres" required>
-                    <option>      </option>
-                    <option>Action</option>
-                    <option>Crime</option>
-                    <option>Drama</option>
-            </div>
-            <input class="btn btn-outline-primary waves-effect " type="submit" value="Search ">
+
         </form>
+        <br>
+        <br>
+        <div style="display: inline;">
+            <form method="POST" target="_self" action="/update.html">
+                <!-- <a href="update.html" target="_blank" class="btn btn-info btn-lg">
+          <span class="glyphicon glyphicon-plus"></span></a> -->
+               <button type="submit"
+                    style="width :fit-content;float :right;margin-right:30%;height: 40px;border-radius: 25px;"
+                    id="btn"><i class="glyphicon glyphicon-plus"> ADDMovie</i></button></a>
+
+            </form>
+            <form method="POST" action="/send_Genres">
+                <div class="genre-div" style="display: inline;">
+                    <select id="options" name="Genres" value="Genres" required>
+                        <option> </option>
+                        <option>Action</option>
+                        <option>Crime</option>
+                        <option>Drama</option>
+                        <option>Comedy</option>
+                        <option>Romance</option>
+                        <option>Thriller</option>
+                        <option>Adventure</option>
+                        <option>Sci-Fi</option>
+                        <option>History</option>
+                        <option>Sport</option>
+                        <option>Documentary</option>
+                        <option>Family</option>
+                        <option>Horror</option>
+                        <option>Biography</option>
+                        <option>Mystery</option>
+                        <option>Western</option>
+                        <option>Music</option>
+                        <option>Fantasy</option>
+                        <option>Animation</option>
+                    </select><button style="height: 40px;border-radius: 0px 25px 0px 0px;" type="submit" id="btn"><i
+                            class="glyphicon glyphicon-film"></i> Genre</button>
+
+                </div>
+
+            </form>
+
+        </div>
         <br>
 
 
         {%if length == 0%}
         <h1>Movie Name is Not Present in our Dataset Sorry!!!</h1>
         {% endif%}
-        <table  cellpadding="16">
+        <table cellpadding="16">
             <tr>
                 {% for i in range(movies | length) %}
                 {% if i==0 %}
-                <th id="id1">
+                <th id="id1" text-center>
                     Trailer
                 </th>
                 <th id="id2">

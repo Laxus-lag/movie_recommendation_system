@@ -42,7 +42,8 @@ def add_data():
     writer = request.form['writer']
     poster = request.form['trailer']
     director = request.form['director']
-    data_insert(name,genre,cast,director,writer,summary,poster,year,rating)
-    return render_template('index.html')
+    k=data_insert(name,genre,cast,director,writer,summary,poster,year,rating)
+    return render_template('index.html',k=k)
+
 if __name__ == '__main__':
     app.run(debug=True)

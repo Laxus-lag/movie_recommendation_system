@@ -58,10 +58,14 @@ def data_insert(name, genre, cast, director, writer, summary, poster,year,rating
     year=str(year)
     rating=str(rating)
     index=str(len(data))
+    for item in data:
+        if item['Title'] ==name:
+            return 1
     print(type(index))
     mydata = {"Title":name, "Year":year, "Short Summary":summary, "Genres":genre, "YouTube Trailer":poster,"Rating":rating,"Director":director,"Writers":writer,"Cast":cast,"Index":index}
     db.new_db.insert_one(mydata)
     data.append(mydata)
     print(len(data))
+    return 0
     
 ##############################
